@@ -1,25 +1,16 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
 import CardList from '../components/CardList'
-import { fetchPostsAsync } from '../store/posts/postsSlice';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
-
+import { useGetAllPostsQuery } from '../store/features/postsSlice';
 
 const Home = () => {
-  const { loading, error, posts } = useSelector((state) => state.posts);
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(fetchPostsAsync())
-  }, [])
-  return (
-    <>
-      {loading && <Loading />}
-      {error && <ErrorMessage />}
-      {posts.length&& (<CardList posts={posts} />)}
-    </>
-  )
+
+  const { data: posts, isError, isLoading } = useGetAllPostsQuery();
+
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorMessage />;
+  return <CardList posts={posts} />;
 }
 
 export default Home

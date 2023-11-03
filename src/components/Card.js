@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-
 const Card = ({id, title, desc}) => {
     const navigate = useNavigate()
   return (

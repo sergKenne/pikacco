@@ -1,39 +1,31 @@
-import React, {useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
-import { fetchPostAsync } from '../store/post/postSlice';
+import { useGetPostQuery } from '../store/features/postsSlice';
 
 const Post = () => {
   const navigate = useNavigate()
   const { id } = useParams()
-  const { loading, error, post } = useSelector((state) => state.post);
-  //console.log(post)
-  const dispatch = useDispatch();
+  const { data: post, isError, isLoading } = useGetPostQuery(id);
 
-  useEffect(() => {
-    dispatch(fetchPostAsync(id));
-  }, [dispatch, id]);
-
-
+  if(isLoading) return <Loading/>
+  if (isError) return <ErrorMessage />;
   return (
-    <>
-      {loading && <Loading />}
-      {error && <ErrorMessage />}
-      {!loading && !error && (
-        <div className="container post">
-          <button className='post__btn' onClick={() => navigate("/")}>Go Home</button>
+      <div className="container post">
+          <button className="post__btn" onClick={() => navigate('/')}>
+              Go Home
+          </button>
           <div className="post__card">
-            <div className="post__body">
-              <h2 className="post__title">{post?.title}</h2>
-              <p className="post__desc">{post?.body}</p>
-            </div>
+              <div className="post__body">
+                  <h2 className="post__title">
+                      {post.id} - {post.title}
+                  </h2>
+                  <p className="post__desc">{post.body}</p>
+              </div>
           </div>
-        </div>
-      )}
-    </>
-  )
+      </div>
+  );
 }
 
 export default Post
