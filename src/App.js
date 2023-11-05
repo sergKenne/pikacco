@@ -1,5 +1,5 @@
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes,Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Post from './pages/Post';
@@ -14,7 +14,8 @@ function App() {
           <main className="main">
               <div className="container">
                   <Routes>
-                      <Route path="/" element={<Home />} />
+                      <Route path="/" element={<Navigate to="/posts" replace />} />
+                      <Route path="/posts" element={<Home />} />
                       <Route path="/post/:id" element={<Post />} />
                       <Route path="*" element={<NotFound />} />
                   </Routes>

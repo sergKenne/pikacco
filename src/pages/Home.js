@@ -1,16 +1,15 @@
-import React from 'react'
-import CardList from '../components/CardList'
+import React from 'react';
+import CardList from '../components/CardList';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
-import { useGetAllPostsQuery } from '../store/features/postsSlice';
+import { useGetAllPostsQuery } from '../store/features/postsApi';
 
 const Home = () => {
+    const { data: posts, isError, isLoading } = useGetAllPostsQuery();
 
-  const { data: posts, isError, isLoading } = useGetAllPostsQuery();
+    if (isLoading) return <Loading />;
+    if (isError) return <ErrorMessage />;
+    return <CardList posts={posts} />;
+};
 
-  if (isLoading) return <Loading />;
-  if (isError) return <ErrorMessage />;
-  return <CardList posts={posts} />;
-}
-
-export default Home
+export default Home;

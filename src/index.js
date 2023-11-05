@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ApiProvider } from '@reduxjs/toolkit/query/react';
+//import { ApiProvider } from '@reduxjs/toolkit/query/react';
 import './index.scss';
 import App from './App';
-import { postsApi } from './store/features/postsSlice';
+//import { apiPosts } from './store/features/apiPosts';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ApiProvider api={postsApi}>
+  <Provider store={store}>
     <Router>
       <App />
     </Router>
-  </ApiProvider>
+  </Provider>
 );
